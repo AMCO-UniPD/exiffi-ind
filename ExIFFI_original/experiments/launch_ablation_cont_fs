@@ -15,8 +15,8 @@ coffe_name=${cfg[coffe_name]}
 piade_prefix=${cfg[piade_prefix]}
 piade_suffix=${cfg[piade_suffix]}
 
-model_name="EIF+"
-interpretation="EXIFFI+"
+model_name="$2"
+interpretation="$3"
 scenario=2
 n_runs=10
 n_cont_values=11
@@ -42,6 +42,7 @@ uv run $script_path \
     --scaler_type 4 \
     --subset_cont_values \
     --merge_dict \
+    --run_ablation_cont \
     --plot_ablation_cont \
     --file_pos 0
 

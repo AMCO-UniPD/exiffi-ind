@@ -88,7 +88,8 @@ if args.run_ablation_cont:
 
     gfi_dict = {
         "gfi_rankings": gfi_rankings,
-        "top3_features": top3_features
+        "top3_features": top3_features,
+        "cont_values": cont_values
     }
 
     print("-"*50)

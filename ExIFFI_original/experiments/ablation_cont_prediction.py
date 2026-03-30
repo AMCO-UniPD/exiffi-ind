@@ -127,7 +127,7 @@ if args.plot_ablation_cont:
         results_dict = results_dict,
         plot_path = plot_path,
         exp_name = "ablation_cont_prediction",
-        save_image = False
+        save_image = True
     )
 
 

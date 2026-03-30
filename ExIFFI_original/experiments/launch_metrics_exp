@@ -16,8 +16,8 @@ coffe_name=${cfg[coffe_name]}
 piade_prefix=${cfg[piade_prefix]}
 smd_prefix=${cfg[smd_prefix]}
 
-model_names=("SVDD")
-interpretations=("ACME")
+model_name="$2"
+interpretation="$3"
 n_estimators=300
 scenario=2
 n_runs=10
@@ -31,115 +31,110 @@ epochs=10
 batch_size=64
 device_num=0
 
-n_models=${#model_names[@]}
+if [[ "$compute_metrics" != 0 ]]; then
 
-for ((i = 0; i < n_models; i++)); do
+  echo "-----------------------------------------------------------------------------------------------------"
+  echo "Performance metrics experiment for model $model_name and interpretation $interpretation"
+  echo "-----------------------------------------------------------------------------------------------------"
 
-  if [[ "$compute_metrics" != 0 ]]; then
+  if [[ "$dataset_name" = ${piade_prefix}[1-5] && "$dataset_name" = ${piade_prefix}[1-5]${piade_suffix} ]]; then
 
     echo "-----------------------------------------------------------------------------------------------------"
-    echo "Performance metrics experiment for model ${model_names[$i]} and interpretation ${interpretations[$i]}"
+    echo "dataset_name is $dataset_name, so we just perform the time experiments"
     echo "-----------------------------------------------------------------------------------------------------"
 
-    if [[ "$dataset_name" = ${piade_prefix}[1-5] && "$dataset_name" = ${piade_prefix}[1-5]${piade_suffix} ]]; then
+    mode="times"
 
-      echo "-----------------------------------------------------------------------------------------------------"
-      echo "dataset_name is $dataset_name, so we just perform the time experiments"
-      echo "-----------------------------------------------------------------------------------------------------"
+    uv run $script_path \
+      --dataset_name "$dataset_name" \
+      --dataset_path "$dataset_path" \
+      --model "$model_name" \
+      --interpretation "$interpretation" \
+      --n_estimators $n_estimators \
+      --scenario $scenario \
+      --pre_process \
+      --compute_GFI \
+      --contamination $contamination \
+      --n_runs $n_runs \
+      --n_runs_imp $n_runs_imp \
+      --background $background \
+      --seed $seed \
+      --epochs $epochs \
+      --batch_size $batch_size \
+      --device_num $device_num \
+      --file_pos $file_pos
 
-      mode="times"
+  elif [[ "$dataset_name" == "$tep_name" || "$dataset_name" == "$coffe_name" || "$dataset_name" == "${smd_prefix}"* ]]; then
 
-      uv run $script_path \
-        --dataset_name "$dataset_name" \
-        --dataset_path "$dataset_path" \
-        --model "${model_names[$i]}" \
-        --interpretation "${interpretations[$i]}" \
-        --n_estimators $n_estimators \
-        --scenario $scenario \
-        --pre_process \
-        --compute_GFI \
-        --contamination $contamination \
-        --n_runs $n_runs \
-        --n_runs_imp $n_runs_imp \
-        --background $background \
-        --seed $seed \
-        --epochs $epochs \
-        --batch_size $batch_size \
-        --device_num $device_num \
-        --file_pos $file_pos
+    echo "-----------------------------------------------------------------------------------------------------"
+    echo "dataset_name is $dataset_name, so running metrics_exp with compute_perf with pre processing"
+    echo "-----------------------------------------------------------------------------------------------------"
 
-    elif [[ "$dataset_name" == "$tep_name" || "$dataset_name" == "$coffe_name" || "$dataset_name" == "${smd_prefix}"* ]]; then
+    mode="metrics"
 
-      echo "-----------------------------------------------------------------------------------------------------"
-      echo "dataset_name is $dataset_name, so running metrics_exp with compute_perf with pre processing"
-      echo "-----------------------------------------------------------------------------------------------------"
+    uv run $script_path \
+      --dataset_name "$dataset_name" \
+      --dataset_path "$dataset_path" \
+      --model "$model_name" \
+      --interpretation "$interpretation" \
+      --n_estimators $n_estimators \
+      --scenario $scenario \
+      --pre_process \
+      --scaler_type 4 \
+      --compute_GFI \
+      --contamination $contamination \
+      --n_runs $n_runs \
+      --n_runs_imp $n_runs_imp \
+      --compute_perf \
+      --background $background \
+      --seed $seed \
+      --epochs $epochs \
+      --batch_size $batch_size \
+      --device_num $device_num \
+      --file_pos $file_pos
 
-      mode="metrics"
+  else
 
-      uv run $script_path \
-        --dataset_name "$dataset_name" \
-        --dataset_path "$dataset_path" \
-        --model "${model_names[$i]}" \
-        --interpretation "${interpretations[$i]}" \
-        --n_estimators $n_estimators \
-        --scenario $scenario \
-        --pre_process \
-        --scaler_type 4 \
-        --compute_GFI \
-        --contamination $contamination \
-        --n_runs $n_runs \
-        --n_runs_imp $n_runs_imp \
-        --compute_perf \
-        --background $background \
-        --seed $seed \
-        --epochs $epochs \
-        --batch_size $batch_size \
-        --device_num $device_num \
-        --file_pos $file_pos
+    echo "-----------------------------------------------------------------------------------------------------"
+    echo "dataset_name is $dataset_name, so running metrics_exp with compute_perf without pre processing (synthetic dataset)"
+    echo "-----------------------------------------------------------------------------------------------------"
 
-    else
+    mode="metrics"
 
-      echo "-----------------------------------------------------------------------------------------------------"
-      echo "dataset_name is $dataset_name, so running metrics_exp with compute_perf without pre processing (synthetic dataset)"
-      echo "-----------------------------------------------------------------------------------------------------"
-
-      mode="metrics"
-
-      uv run $script_path \
-        --dataset_name "$dataset_name" \
-        --dataset_path "$dataset_path" \
-        --model "${model_names[$i]}" \
-        --interpretation "${interpretations[$i]}" \
-        --n_estimators $n_estimators \
-        --scenario $scenario \
-        --compute_GFI \
-        --contamination $contamination \
-        --n_runs $n_runs \
-        --n_runs_imp $n_runs_imp \
-        --compute_perf \
-        --background $background \
-        --seed $seed \
-        --epochs $epochs \
-        --batch_size $batch_size \
-        --device_num $device_num \
-        --file_pos $file_pos
-
-    fi
+    uv run $script_path \
+      --dataset_name "$dataset_name" \
+      --dataset_path "$dataset_path" \
+      --model "$model_name" \
+      --interpretation "$interpretation" \
+      --n_estimators $n_estimators \
+      --scenario $scenario \
+      --compute_GFI \
+      --contamination $contamination \
+      --n_runs $n_runs \
+      --n_runs_imp $n_runs_imp \
+      --compute_perf \
+      --background $background \
+      --seed $seed \
+      --epochs $epochs \
+      --batch_size $batch_size \
+      --device_num $device_num \
+      --file_pos $file_pos
 
   fi
 
-  echo "-----------------------------------------------------------------------------------------------------"
-  echo "Getting results of metrics experiment"
-  echo "-----------------------------------------------------------------------------------------------------"
+fi
 
-  ./launch_get_metrics \
-    "$dataset_name" \
-    "$dataset_path" \
-    "${model_names[$i]}" \
-    "${interpretations[$i]}" \
-    $n_estimators \
-    $scenario \
-    $file_pos \
-    $mode
+echo "-----------------------------------------------------------------------------------------------------"
+echo "Getting results of metrics experiment"
+echo "-----------------------------------------------------------------------------------------------------"
 
-done
+./launch_get_metrics \
+  "$dataset_name" \
+  "$dataset_path" \
+  "$model_name" \
+  "$interpretation" \
+  $n_estimators \
+  $scenario \
+  $file_pos \
+  $mode
+

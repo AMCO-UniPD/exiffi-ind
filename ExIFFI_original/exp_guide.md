@@ -19,14 +19,14 @@ runs.
 
 There are several command line arguments that can be passed to the script but
 the most important ones are:
-- `dataset_name` → name of the benchmark dataset to use → e.g. `TEP_ACME,
+- `dataset_name` → name of the benchmark dataset to use → e.g. `TEP,
 piade_s2`
 - `model_name` → name of the `AD` model to train → e.g. `EIF,EIF+,IF`
 - `interpretation` → name of the interpretation algorithm to use → e.g.
 `EXIFFI, EXIFFI+, DIFFI, ACME, KernelSHAP`
 
 ```bash
-./launch_exp_GFI TEP_ACME EIF+ EXIFFI+
+./launch_exp_GFI TEP EIF+ EXIFFI+
 ```
 
 ### Local Importances Experiments
@@ -38,10 +38,24 @@ used to produce the `LFI` Score Plot.
 
 #### Example
 
-The command line arguments are the same used in `launch_exp_GFI`.
+The command line arguments are the same used in `launch_exp_GFI` with the
+addition of the `f1` and `f2` command line arguments. These are used to
+indicate the names of the features to include in the Local Scoremap. For
+example:
 
 ```bash
-./launch_local_imp_exp TEP_ACME EIF+ EXIFFI+
+./launch_local_imp_exp TEP EIF+ EXIFFI+ xmeas_11 xmeas_22
+```
+
+with this command the Local Scoremaps will be produced on the `xmeas_11` and
+`xmeas_22` features.
+
+If a dataset does not provide names for its features (e.g. this happens in the
+`SMD` dataset) by default the feature names will coincide with their index. So
+we can produce the scoremap on the first two features using:
+
+```bash
+./launch_local_imp_exp TEP EIF+ EXIFFI+ 0 1
 ```
 
 ### Local Scoremaps Experiments
@@ -57,7 +71,7 @@ scoremaps.
 The command line arguments are the same used in `launch_exp_GFI`.
 
 ```bash
-./launch_scoremaps_exp TEP_ACME EIF+ EXIFFI+
+./launch_scoremaps_exp TEP EIF+ EXIFFI+
 ```
 
 ### Performance Metrics Experiments
@@ -69,14 +83,11 @@ fit, predict and importance computation times in a dictionary.
 - `get_metrics.py` → this scripts prints out the metrics table in a nice
 markdown format and prints out the fit, predict and importance times.
 
-In order to launch the experiment use the `launch_metrics_exp` script where it
-is possible to define the lists `model_names` and `interpretations` to run the
-experiment on multiple `model-interpretation` pairs. Finally the script can be
-launched as follows:
+The script can be launched as follows:
 
 ```bash
-./launch_metrics_exp TEP_ACME 1 # to compute both metrics and times
-./launch_metrics_exp TEP_ACME # to compute just the times
+./launch_metrics_exp TEP EIF+ EXIFFI+ 1 # to compute both metrics and times
+./launch_metrics_exp TEP EIF+ EXIFFI+ # to compute just the times
 ```
 
 ### Feature Selection Experiments
@@ -94,7 +105,7 @@ containing the results.
 The command line arguments are the same used in `launch_exp_GFI`.
 
 ```bash
-./launch_fs_exp TEP_ACME EIF+ EXIFFI+
+./launch_fs_exp TEP EIF+ EXIFFI+
 ```
 
 >[!warning]
@@ -125,7 +136,7 @@ Since the focus is on `EIF+_EXIFFI+` the only command line argument for this
 script is the dataset name:
 
 ```bash
-./launch_ablation_tree TEP_ACME
+./launch_ablation_tree TEP EIF+ EXIFFI+
 ```
 
 >[!warning]
@@ -145,7 +156,7 @@ Since the focus is on `EIF+_EXIFFI+` the only command line argument for this
 script is the dataset name:
 
 ```bash
-./launch_ablation_cont_prediction TEP_ACME
+./launch_ablation_cont_prediction TEP EIF+ EXIFFI+
 ```
 
 >[!warning]
@@ -165,9 +176,13 @@ Since the focus is on `EIF+_EXIFFI+` the only command line argument for this
 script is the dataset name:
 
 ```bash
-./launch_ablation_cont_fs TEP_ACME
+# first produce the GFI rankings for the different contamination values
+./launch_ablation_cont_gfi TEP EIF+ EXIFFI+
+# then compute the AUC_FS score for each ranking
+./launch_ablation_cont_fs TEP EIF+ EXIFFI+
 ```
 
 >[!warning]
 > Note that this experiment cannot be executed on the `PIADE` dataset
 > since there are no labels to compute the average precision metric.
+

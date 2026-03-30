@@ -46,11 +46,8 @@ def ablation_trees_exp(dataset: Dataset, args: Namespace) -> dict:
         print("-" * 50)
 
         model = load_model(
-            model_name=args.model_name,
-            interpretation=args.interpretation,
-            n_estimators=num_tree,
-            max_depth=args.max_depth,
-            max_samples=args.max_samples,
+            args = args,
+            n_features = dataset.shape[1]
         )
 
         for j in range(args.n_runs):

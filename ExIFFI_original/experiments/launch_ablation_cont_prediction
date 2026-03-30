@@ -18,7 +18,7 @@ piade_suffix=${cfg[piade_suffix]}
 model_name="EIF+"
 interpretation="EXIFFI+"
 scenario=2
-n_runs=10
+n_runs=1
 n_cont_values=11
 contamination=0.15
 cont_values=(0.2 0.4 0.6 0.8)
@@ -40,6 +40,7 @@ uv run $script_path \
     --n_runs "$n_runs" \
     --pre_process \
     --scaler_type 4 \
+    --run_ablation_cont \
     --plot_ablation_cont \
     --file_pos 0
 

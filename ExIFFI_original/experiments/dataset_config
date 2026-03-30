@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-tep_name="TEP_ACME"
+tep_name="TEP"
 coffe_name=("CoffeData" "CoffeDataD2")
 piade_prefix="piade_s"
 piade_suffix="_alarms_no_zeros"

@@ -17,11 +17,11 @@ piade_suffix=${cfg[piade_suffix]}
 
 model_name="$2"
 interpretation="$3"
-n_estimators=${4:-300}
-scenario=${5:-2}
+f1=${4:-0}
+f2=${5:-1}
+n_estimators=${6:-300}
+scenario=${7:-2}
 contamination=0.15
-f1="33"
-f2="32"
 
 echo "#############################################"
 echo "Producing local scoremap for model ${model_name} and interpretation ${interpretation}"
