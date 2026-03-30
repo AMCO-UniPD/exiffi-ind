@@ -1,0 +1,19 @@
+__pycache__/
+src/test.py
+src/test_std
+data/data_DIFFI/
+data/syn/syn_feat
+exiffi_env.yml
+utils_reboot/time_dict_backup/
+tests/try_stuff.py
+
+# Python
+*.pickle
+*.csv.gz
+*.pdf
+*.png
+
+# notebooks
+notebooks/
+
+
