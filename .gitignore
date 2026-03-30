@@ -1,0 +1,27 @@
+CoffeData.csv.gz
+CoffeDataD2.csv
+CoffeData
+
+# Python
+__pycache__/
+*.py[cod]
+#*.pickle
+*.egg-info
+build/
+
+# C extensions
+*.so
+
+# PDFs
+*.pdf
+
+# Presentation files
+Presentation/
+
+# notebooks
+notebooks/
+
+# old src folder
+src/
+
+raspberry_experiment/CoffeeData.csv
