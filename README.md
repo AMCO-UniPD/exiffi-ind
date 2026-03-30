@@ -25,6 +25,10 @@ include and initialize submodules:
 git clone --recurse-submodules https://github.com/FrancescoBorsatti/ExIFFI_Industrial_Test.git
 ```
 
+>[!warning]
+> In the `ExIFFI_Core` submodule be sure to be checked out at the `exiffi_core` branch
+> which contains the working version of the code.
+
 Finally synchronize the packages by running:
 
 ```bash
