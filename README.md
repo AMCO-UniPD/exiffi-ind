@@ -46,30 +46,27 @@ source .venv/bin/activate
 
 The repository is organized as follows:
 
-- `datasets/data/PIADE/`: contains the two `csv` files of the PIADE dataset.
-    - `raw_data.csv` contains the raw data.
-    - `sequences_1h_data.csv` contains an aggregated version of the raw data
-    where each pair of consecutive samples is distanced by 1h of time.
-    - there are also all the directories containing the `PIADE` data divided by
-    single machine
-- `datasets/data/TEP_ACME`: this folder contains the data of the `TEP` dataset
-- There are not data for the `CoffeeData` dataset because it's a confidential
-dataset and we are not allowed to share its contents
-- `ExIFFI_original`: Submodule that contains the original implementation of the
-`ExIFFI` algorithm, in Python.
-    - `utils_reboot`: Directory with the utility functions
-    - `models_reboot`: Directory with the functions related to the models
-    - `experiments`: Directory containing all the python scripts to launch the
-    experiments.
-- `ExIFFI_Core`: Submodule containing the enhanced implementation of `ExIFFI`.
+### Data
+
+All publicly available datasets are contained inside `datasets/data`. More
+details on their organization [here](datasets/readme.md).
+
+### `ExIFFI_Core`
+
+In the `ExIFFI_Core` submodule the enhanced implementation of `ExIFFI` is contained.
 Some of the functions used to fit the model and compute the importance scores
 are written in C in order to be executed in parallel through the `openmp`
 library.
 
-## Launch Experiments
+>[!note]
+> More details [here](ExIFFI_Core/README.md)
 
-For the tutorial on how to run the experiments [check this guide](ExIFFI_original/exp_guide.md).
+### Experiments
 
-## Additional Results
+All the code launch experiments is contained in the `ExIFFI_original` folder.
+For the tutorial on how to run the experiments [check this
+guide](ExIFFI_original/exp_guide.md).
+
+### Additional Results
 
 Additional results not reported in the paper [are contained here](additional_results/results.md)
