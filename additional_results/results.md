@@ -71,6 +71,108 @@ of `exiffi-ind`](https://arxiv.org/abs/2405.01158) cover only some
 
 ![Feature Selection `SVDD_ACME`](img/TEP/fs_plots/SVDD/ACME/22-03-2026_20-16-37_TEP_ACME_EIF+_SVDD_ACME_feature_selection_2.png)
 
+### Ablation Studies
+
+The Ablation Studies reported in Section 4.J of the paper were performed on the
+`TEP` dataset focusing on the `EIF+_EXIFFI+` model-interpretation pair. In this
+section the visualizations not reported in the paper for space reason are
+displayed.
+
+#### Ablation Tree Experiment
+
+In this ablation study the performances of `EIF+` are evaluated as the number
+of trees used to fit the model increases. The number of trees used is `(10 30
+50 100 200 300)`. In this section we report the plots for the fit and predict
+times, while the plot for the average precision metric is reported in Figure 8
+(pag. 8) of the paper.
+
+As expected the fit and predict times increase linearly as the number of trees increases.
+
+##### Fit Time
+
+![Ablation trees fit time `EIF+_EXIFFI+`](img/TEP/ablation_studies/ablation_trees/ablation_tree_plot_fit_times_EIF+_EXIFFI+_scenario_2.png)
+
+##### Predict Time
+
+![Ablation trees predict time `EIF+_EXIFFI+`](img/TEP/ablation_studies/ablation_trees/ablation_tree_plot_predict_times_EIF+_EXIFFI+_scenario_2.png)
+
+#### Ablation Contamination
+
+In this experiment the ROC AUC metric is plotted against the level of dataset
+contamination (Figure 9 in the paper).
+
+The contamination values used in the experiment are both higher and lower than
+the true contamination of `TEP` (i.e. around 4%). The last four values are
+quite high and are used to test how the model behaves with moderately to
+extremely contaminated datasets:
+
+```python
+contamination_values = [0, 0.00821918, 0.01643836, 0.02465753, 0.03287671, 0.04109589,
+                        0.04931507, 0.05753425, 0.06575342, 0.0739726 , 0.08219178,
+                        0.2, 0.4, 0.6, 0.8]
+```
+
+##### Fit Time
+
+The fit time show a general increasing trend since the training set is
+constructed considering solely the inliers, so as the contamination increases
+the training set size decreases.
+
+![Ablation contamination fit time `EIF+_EXIFFI+`](img/TEP/ablation_studies/ablation_cont_prediction/ablation_cont_prediction_fit_times.png)
+
+##### Predict Time
+
+The predict time increases significantly for contamination level higher than
+the true dataset contamination. This happens because the test set (which is
+used to estimate the predict time) contains all the anomalous samples and its
+size increases with the contamination value (i.e. the higher the contamination
+value the higher the number of points that are considered as outliers).
+
+![Ablation contamination predict time `EIF+_EXIFFI+`](img/TEP/ablation_studies/ablation_cont_prediction/ablation_cont_predict_predict_times.png)
+
+#### Ablation `max_samples` and `max_depth`
+
+In this experiment, not reported in the paper for lack of space, the average
+precision of `EIF+` is plotted against the `max_samples` hypeparameter which
+represents the subsample size $\psi$ used to fit the isolation trees composing
+the forest.
+
+Since the `max_depth` hyperparameter (i.e. the maximum depth allowed in the
+isolation trees) is usually set to $\text{max\_depth}=log_2(\psi)$ with this
+experiment the effect of `max_depth` is also tested.
+
+The `max_samples` values used for the experiment are:
+
+```python
+max_samples = [64, 128, 256, 512, 1024, 2048]
+```
+
+##### Average Precision
+
+The average precision seems to be not affected by the bootstrap samples size
+$\psi$ since it remains essentially constant for all the tested values.
+
+![Ablation `max_samples` average precision `EIF+_EXIFFI+`](img/TEP/ablation_studies/ablation_max_samples/21-03-2026_15-55-13_ablation_max_samples_plot_avg_precs_EIF+_EXIFFI+_scenario_2.png)
+
+##### Fit Times
+
+By increasing the amount of samples used by the trees to partition the feature
+space the fit time increases linearly with `max_samples`. This happens because
+the maximum `max_samples` value testes (i.e. 2048) is still smaller than the
+size of the training set (i.e. 35600 in the case of `TEP`).
+
+![Ablation `max_samples` fit time `EIF+_EXIFFI+`](img/TEP/ablation_studies/ablation_max_samples/21-03-2026_15-55-14_ablation_max_samples_plot_fit_times_EIF+_EXIFFI+_scenario_2.png)
+
+##### Predict Times
+
+The predict time increases up to `max_samples=512` to saturate at about 0.53
+seconds for all the successive values. In any case the shaded regions
+(indicating the standard deviation of the resul across the different runs used
+to compute the predict time) indicates an high variability which shows an
+increasing trend also in the predict time.
+
+![Ablation `max_samples` predict time `EIF+_EXIFFI+`](img/TEP/ablation_studies/ablation_max_samples/21-03-2026_15-55-14_ablation_max_samples_plot_predict_times_EIF+_EXIFFI+_scenario_2.png)
+
 ## `PIADE` Dataset
 
 ### Local Scoremaps
