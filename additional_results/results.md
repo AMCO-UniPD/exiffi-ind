@@ -138,7 +138,7 @@ represents the subsample size $\psi$ used to fit the isolation trees composing
 the forest.
 
 Since the `max_depth` hyperparameter (i.e. the maximum depth allowed in the
-isolation trees) is usually set to $\text{max\_depth}=log_2(\psi)$ with this
+isolation trees) is usually set to $d_{max}=log_2(\psi)$ with this
 experiment the effect of `max_depth` is also tested.
 
 The `max_samples` values used for the experiment are:
