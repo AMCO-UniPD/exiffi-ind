@@ -2,7 +2,47 @@
 Python script to convert an image from RGB to greyscale
 """
 
+import ipdb
+import os
+import argparse
 from PIL import Image
 
-img = Image.open("02-04-2026_11-12-13_multi_syn_data.png").convert("L")
-img.save("02-04-2026_11-12-13_multi_syn_data_greyscale.png")
+parser = argparse.ArgumentParser(description="RGB to greyscale converter")
+
+parser.add_argument(
+    "--image_path",
+    type=str,
+    default="experiments",
+    help="path to the image"
+)
+
+args = parser.parse_args()
+
+paper_image_dirpath = os.path.join(
+    os.getcwd(),
+    "paper_images",
+    "rgb"
+)
+
+paper_gey_image_dirpath = os.path.join(
+    os.getcwd(),
+    "paper_images",
+    "grey"
+)
+
+for image_path in os.listdir(paper_image_dirpath):
+
+    image_name = os.path.splitext(os.path.basename((image_path)))[0]
+    image_path = os.path.join(paper_image_dirpath,image_path)
+
+    print("-"*50)
+    print(f"Processing image {image_name} at path {image_path}")
+    print("-"*50)
+
+    img = Image.open(image_path).convert("L")
+    greyscale_image_path = os.path.join(paper_gey_image_dirpath,f"{image_name}_greyscale.png")
+    img.save(greyscale_image_path)
+
+    print("-"*50)
+    print(f"Greyscale image saved at {greyscale_image_path}")
+    print("-"*50)

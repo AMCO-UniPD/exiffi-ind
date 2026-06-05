@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+script_path="rgb_to_grey.py"
+
+image_path="syn_data_plots/multi/02-04-2026_11-12-13_multi_syn_data.png"
+
+uv run $script_path --image_path "$image_path"
