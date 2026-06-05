@@ -17,4 +17,7 @@ tests/try_stuff.py
 # notebooks
 notebooks/
 
+# some images to ignore
+experiments/syn_data_plots
+
 
