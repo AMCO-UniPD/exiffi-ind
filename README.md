@@ -22,7 +22,7 @@ Then clone the repository using the `--recurse-submodules` option to also
 include and initialize submodules:
 
 ```bash
-git clone --recurse-submodules https://github.com/FrancescoBorsatti/ExIFFI_Industrial_Test.git
+git clone --recurse-submodules https://github.com/AMCO-UniPD/exiffi-ind.git
 ```
 
 >[!warning]
