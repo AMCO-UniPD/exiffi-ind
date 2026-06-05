@@ -162,7 +162,7 @@ def compute_local_importances(
     print("#" * 50)
 
     if interpretation == "DIFFI":
-        fi, _ = local_diffi_batch(model=I, X=anomalies)
+        fi, _, _ = local_diffi_batch(model=I, X=anomalies)
     elif (
         interpretation == "EXIFFI"
         or interpretation == "EXIFFI+"

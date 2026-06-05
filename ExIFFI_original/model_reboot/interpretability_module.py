@@ -199,7 +199,7 @@ def local_diffi(iforest, x):
     return fi, exec_time
 
 
-def local_diffi_batch(X: np.array, model: Type[IsolationForest] = IsolationForest()):
+def local_diffi_batch(X: np.ndarray, model: Type[IsolationForest] = IsolationForest()):
     """Computes the Local Feature Importance scores for a set of input samples according to the DIFFI algorithm.
 
     Parameters
@@ -218,7 +218,7 @@ def local_diffi_batch(X: np.array, model: Type[IsolationForest] = IsolationFores
     exec_time = []
     for i in range(X.shape[0]):
         x_curr = X[i, :]
-        fi_curr, exec_time_curr = model.local_diffi(x_curr)
+        fi_curr, exec_time_curr = local_diffi(model, x_curr)
         fi.append(fi_curr)
         ord_idx_curr = np.argsort(fi_curr)[::-1]
         ord_idx.append(ord_idx_curr)

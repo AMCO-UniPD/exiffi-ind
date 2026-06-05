@@ -23,7 +23,7 @@ datapath = os.path.join(
 )
 
 args = define_arguments(exp_name="fs_exp")
-check_arguments(model_name=args.eval_model, interpretation=args.interpretation)
+check_arguments(model_name=args.model_name, interpretation=args.interpretation)
 
 datasets = []
 
