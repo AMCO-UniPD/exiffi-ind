@@ -2,9 +2,9 @@
 
 script_path="multi_lfi_scatter_plot_exp.py"
 
-dataset_names=("separated_anomalies" "moon_anomalies")
-model_name="EIF+"
-interpretation="EXIFFI+"
+dataset_names=("xy_axis" "half_moon")
+model_name="IF"
+interpretation="DIFFI"
 f1=0
 f2=1
 scenario=2

@@ -6,7 +6,7 @@ echo "------------------------------------------------"
 echo "Executing $script_path"
 echo "------------------------------------------------"
 
-syn_data_names=("separated_anomalies" "moon_anomalies")
+syn_data_names=("xy_axis" "half_moon")
 file_pos=0
 
 uv run $script_path \

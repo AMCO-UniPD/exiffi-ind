@@ -6,17 +6,18 @@ echo "------------------------------------------------"
 echo "Executing $script_path"
 echo "------------------------------------------------"
 
-dataset_names=("separated_anomalies" "moon_anomalies")
+dataset_names=("xy_axis" "half_moon")
 eval_model="EIF+"
-model_name="EIF+"
-interpretation="EXIFFI+"
+model_name="IF"
+interpretation="DIFFI"
 scenario=2
 change_box_loc=0.6
 file_pos=0
 
 uv run $script_path \
   --dataset_names "${dataset_names[@]}" \
-  --eval_model $eval_model \
+  --model_name "$model_name" \
+  --eval_model "$eval_model" \
   --model_interpretation "$model_name" \
   --interpretation "$interpretation" \
   --scenario $scenario \
