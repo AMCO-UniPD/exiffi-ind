@@ -3,8 +3,8 @@
 script_path="multi_lfi_scatter_plot_exp.py"
 
 dataset_names=("xy_axis" "half_moon")
-model_name="IF"
-interpretation="DIFFI"
+model_name="EIF+"
+interpretation="EXIFFI+"
 f1=0
 f2=1
 scenario=2

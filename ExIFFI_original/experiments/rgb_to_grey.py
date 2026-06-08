@@ -34,15 +34,25 @@ for image_path in os.listdir(paper_image_dirpath):
 
     image_name = os.path.splitext(os.path.basename((image_path)))[0]
     image_path = os.path.join(paper_image_dirpath,image_path)
-
-    print("-"*50)
-    print(f"Processing image {image_name} at path {image_path}")
-    print("-"*50)
-
-    img = Image.open(image_path).convert("L")
     greyscale_image_path = os.path.join(paper_gey_image_dirpath,f"{image_name}_greyscale.png")
-    img.save(greyscale_image_path)
 
-    print("-"*50)
-    print(f"Greyscale image saved at {greyscale_image_path}")
-    print("-"*50)
+    if os.path.exists(greyscale_image_path):
+
+        print("-"*50)
+        print(f"Image {image_name} already converted in grey scale, skipping it")
+        print("-"*50)
+
+        continue
+
+    else:
+
+        print("-"*50)
+        print(f"Processing image {image_name} at path {image_path}")
+        print("-"*50)
+
+        img = Image.open(image_path).convert("L")
+        img.save(greyscale_image_path)
+
+        print("-"*50)
+        print(f"Greyscale image saved at {greyscale_image_path}")
+        print("-"*50)
